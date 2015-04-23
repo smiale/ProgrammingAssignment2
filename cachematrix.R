@@ -4,9 +4,11 @@
 ## Creates a special matrix object that can cache its inverse
 
 makeCacheMatrix <- function(x = matrix()) {
+    ## i is the cached inverse
     i <- NULL
     set <- function(y)
     {
+      ## If set is called, make sure to clear the cached inverse
       x <<- y
       i <<- NULL
     }
@@ -27,6 +29,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## and cached, return it.
 
 cacheSolve <- function(x, ...) {
+    ## Check to see if inverse has already been cached
     i <- x$getinverse()
     if (!is.null(i))
     {
@@ -34,6 +37,7 @@ cacheSolve <- function(x, ...) {
       return(i)
     }
     
+    ## if not, generate inverse of matrix and store in cache
     data <- x$get()
     i <- solve(data, ...)
     x$setinverse(i)
